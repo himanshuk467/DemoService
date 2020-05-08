@@ -47,13 +47,6 @@ public class UserDao {
         logger.info("Userdao getUser called ");
         for(User user:userList) {
             if(user.getId().equals(id)) {
-               logger.info(gson.toJson(new JSONObject().put("content","user found")
-                                .put("name", user.getName())
-                                .put("id",user.getId())));
-                loggerMap.put("name",user.getName());
-                loggerMap.put("id",user.getId());
-                loggerMap.put("content","user found");
-                logger.info(loggerMap);
                 loggerMap.clear();
                 loggerMap.put("name","sdcsd");
                 loggerMap.put("id","131");
