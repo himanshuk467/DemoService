@@ -26,7 +26,7 @@ public class UserController {
     private UserDao userDao;
 
     @GetMapping(path = "/users/{id}")
-    public EntityModel<User> getUser(@PathVariable String id) {
+    public EntityModel<User> getUser(@PathVariable String id) throws Exception{
         logger.info("UserController getUser called for user");
         User user = userDao.getUser(id);
         if(user == null) {

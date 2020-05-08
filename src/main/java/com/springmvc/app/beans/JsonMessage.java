@@ -1,24 +1,24 @@
 package com.springmvc.app.beans;
 
+import org.apache.logging.log4j.core.layout.JsonLayout;
+
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 
 public class JsonMessage implements Serializable {
     private String content;
-    private Map<String, String> map;
-    private Object object;
+    private Map<String, Object> map;
 
     public void setContent(String content) {
         this.content = content;
     }
 
-    public Map<String, String> getMap() {
+    public Map<String, Object> getMap() {
         return map;
     }
 
-    public Object getObject() {
-        return object;
+    public void setMap(Map<String, Object> map) {
+        this.map = map;
     }
 
     public String getContent() {
@@ -26,12 +26,6 @@ public class JsonMessage implements Serializable {
     }
 
     public  JsonMessage() {
-        map = new HashMap<>();
-    }
 
-    public JsonMessage(String content, Object object) {
-        this.content = content;
-        this.object = object;
-        map = new HashMap<>();
     }
 }

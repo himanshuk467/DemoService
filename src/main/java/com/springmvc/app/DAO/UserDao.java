@@ -3,10 +3,7 @@ package com.springmvc.app.DAO;
 import com.google.gson.Gson;
 import com.springmvc.app.beans.JsonMessage;
 import com.springmvc.app.beans.User;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.Marker;
-import org.apache.logging.log4j.MarkerManager;
+import org.apache.logging.log4j.*;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
@@ -46,10 +43,11 @@ public class UserDao {
     }
 
     public static User getUser(String id) {
+        //throw new RuntimeException("thrown");
         logger.info("Userdao getUser called ");
         for(User user:userList) {
             if(user.getId().equals(id)) {
-                logger.info(gson.toJson(new JSONObject().put("content","user found")
+               logger.info(gson.toJson(new JSONObject().put("content","user found")
                                 .put("name", user.getName())
                                 .put("id",user.getId())));
                 loggerMap.put("name",user.getName());
@@ -65,10 +63,34 @@ public class UserDao {
                 logger.info(user);
                 JsonMessage message = new JsonMessage();
                 message.setContent("setting content");
-                message.getMap().put("hi","fdd");
-                message.getMap().put("dcd","sffv");
+                //message.getMap().put("hi","fdd");
+                //message.getMap().put("dcd","sffv");
                 logger.info(message);
-                JsonMessage jsonMessage = new JsonMessage("content here",user);
+
+                JsonMessage jsonMessage1 = new JsonMessage();
+                jsonMessage1.setContent("content2");
+                Map<String, Object> map = new HashMap<>();
+                map.put("user", user);
+                jsonMessage1.setMap(map);
+                Long timetaken = 5L;
+                String time = timetaken + "ms";
+                ThreadContext.put("time_taken",time);
+                logger.info(jsonMessage1);
+                ThreadContext.remove("time_taken");
+
+                JsonMessage jsonMessage = new JsonMessage();
+                jsonMessage.setContent("content here");
+                map.clear();
+                map.put("userrrrr", user);
+                map.put("istrue",Boolean.TRUE);
+                List<String> list = new ArrayList<>();
+                list.add("sdcd");
+                list.add("wedwed");
+                Map<String, User> map1 = new HashMap<>();
+                map1.put("user mao",user);
+                map.put("mapp", map1);
+                map.put("list", list);
+                jsonMessage.setMap(map);
                 logger.info(SERVICE_MARKER,jsonMessage);
                 return user;
             }

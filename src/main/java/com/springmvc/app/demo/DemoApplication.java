@@ -2,6 +2,8 @@ package com.springmvc.app.demo;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.core.layout.JsonLayout;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -24,6 +26,8 @@ public class DemoApplication {
 	public static void main(String[] args) {
 		logger.info("Starting my application Himanshu");
 		SpringApplication.run(DemoApplication.class, args);
+		System.setProperty("log4j2.contextSelector",
+				"org.apache.logging.log4j.core.async.AsyncLoggerContextSelector");
 	}
 
 	@Bean
