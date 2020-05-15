@@ -1,7 +1,5 @@
 package com.springmvc.app.beans;
 
-import org.apache.logging.log4j.core.layout.JsonLayout;
-
 import java.io.Serializable;
 import java.util.Map;
 

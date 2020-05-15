@@ -2,6 +2,8 @@ package com.springmvc.app.DAO;
 
 import com.google.gson.Gson;
 import com.springmvc.app.beans.JsonMessage;
+import com.springmvc.app.beans.LogMap;
+import com.springmvc.app.beans.LogMapKeys;
 import com.springmvc.app.beans.User;
 import org.apache.logging.log4j.*;
 import org.json.JSONObject;
@@ -85,6 +87,20 @@ public class UserDao {
                 map.put("list", list);
                 jsonMessage.setMap(map);
                 logger.info(SERVICE_MARKER,jsonMessage);
+
+                LogMap logMap = new LogMap.Builder()
+                        .withKey(LogMapKeys.KEY1.name(), "value11")
+                        .withKey(LogMapKeys.KEY2.name(), "value12")
+                        .build();
+
+                logger.info(logMap.getmap());
+
+                logMap = new LogMap.Builder()
+                        .withKey(LogMapKeys.KEY1.name(), "value11")
+                        .build();
+
+                logger.info(logMap.getmap());
+
                 return user;
             }
         }
