@@ -1,12 +1,10 @@
 package com.springmvc.app.DAO;
 
-import com.google.gson.Gson;
 import com.springmvc.app.beans.JsonMessage;
-import com.springmvc.app.beans.LogMap;
-import com.springmvc.app.beans.LogMapKeys;
+import com.springmvc.app.logging.LogMap;
+import com.springmvc.app.logging.LogMapKeys;
 import com.springmvc.app.beans.User;
 import org.apache.logging.log4j.*;
-import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -16,8 +14,6 @@ public class UserDao {
 
     private static List<User> userList = new ArrayList<>();
     private static final Logger logger = LogManager.getLogger(UserDao.class);
-    private static final Gson gson = new Gson();
-    private static Map<String, String> loggerMap = new HashMap<>();
     private static final Marker SERVICE_MARKER = MarkerManager.getMarker("Service marker");
 
     private static int userCount = 3;
@@ -49,17 +45,8 @@ public class UserDao {
         logger.info("Userdao getUser called ");
         for(User user:userList) {
             if(user.getId().equals(id)) {
-                loggerMap.clear();
-                loggerMap.put("name","sdcsd");
-                loggerMap.put("id","131");
-                loggerMap.put("content","using logger map");
-                logger.info(loggerMap);
-                loggerMap.clear();
-                logger.info(user);
                 JsonMessage message = new JsonMessage();
                 message.setContent("setting content");
-                //message.getMap().put("hi","fdd");
-                //message.getMap().put("dcd","sffv");
                 logger.info(message);
 
                 JsonMessage jsonMessage1 = new JsonMessage();
@@ -88,7 +75,7 @@ public class UserDao {
                 jsonMessage.setMap(map);
                 logger.info(SERVICE_MARKER,jsonMessage);
 
-                LogMap logMap = new LogMap.Builder()
+                LogMap logMap = LogMap.builder()
                         .withKey(LogMapKeys.KEY1.name(), "value11")
                         .withKey(LogMapKeys.KEY2.name(), "value12")
                         .build();
@@ -99,7 +86,19 @@ public class UserDao {
                         .withKey(LogMapKeys.KEY1.name(), "value11")
                         .build();
 
-                logger.info(logMap.getmap());
+                JsonMessage jsonMessage3 = new JsonMessage();
+                Map<String, Object> map3 = new HashMap<>();
+                map3.put("key", new LogMap.Builder().withKey("kxjna","sdcjknk"));
+                jsonMessage3.setMap(map3);
+                logger.info(jsonMessage3);
+               // logger.info(logMap.getmap());
+                //throw new RuntimeException("illegal exception thrown");
+                JsonMessage jsonMessage2 = new JsonMessage();
+                jsonMessage2.setMap(map);
+                jsonMessage2.setContent("sdcsdc");
+                logger.info(jsonMessage2);
+
+                logger.info(user);
 
                 return user;
             }
@@ -118,6 +117,10 @@ public class UserDao {
             }
         }
         return null;
+    }
+
+    private static void logg(LogMap.Builder logMapBuilder) {
+        logger.info(logMapBuilder.build());
     }
 
 }

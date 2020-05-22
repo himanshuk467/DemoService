@@ -26,4 +26,9 @@ public class JsonMessage implements Serializable {
     public  JsonMessage() {
 
     }
+
+    @Override
+    public String toString() {
+        return String.format("content : " + content +  "\n" + "map : " + map);
+    }
 }

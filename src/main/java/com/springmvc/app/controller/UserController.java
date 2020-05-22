@@ -1,10 +1,12 @@
 package com.springmvc.app.controller;
 
 import com.springmvc.app.DAO.UserDao;
+import com.springmvc.app.beans.JsonMessage;
 import com.springmvc.app.beans.User;
 import com.springmvc.app.exceptions.UserNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.layout.JsonLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -14,7 +16,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
  // http://localhost:8080/users command to run :- mvn spring-boot:run
@@ -26,22 +30,33 @@ public class UserController {
     private UserDao userDao;
 
     @GetMapping(path = "/users/{id}")
-    public EntityModel<User> getUser(@PathVariable String id) throws Exception{
-        logger.info("UserController getUser called for user");
-        User user = userDao.getUser(id);
-        if(user == null) {
-            throw new UserNotFoundException("id - {} not found " + id);
-        }
+    public EntityModel<User> getUser(@PathVariable String id) throws Exception {
+       // try {
 
-        //Resource is EntityModel now in hateoas
-        //ControllerLinkBuilder is WebMvcLinkBuilder
-        EntityModel<User> userEntityModel = new EntityModel<>(user);
-        WebMvcLinkBuilder linkTo = WebMvcLinkBuilder
-                .linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getAllUsers());
+            logger.info("UserController getUser called for user");
+            User user = userDao.getUser(id);
+            if (user == null) {
+                throw new UserNotFoundException("id - {} not found " + id);
+            }
 
-        userEntityModel.add(linkTo.withRel("all-users"));
+            //Resource is EntityModel now in hateoas
+            //ControllerLinkBuilder is WebMvcLinkBuilder
+            EntityModel<User> userEntityModel = new EntityModel<>(user);
+            WebMvcLinkBuilder linkTo = WebMvcLinkBuilder
+                    .linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getAllUsers());
 
-        return userEntityModel;
+            userEntityModel.add(linkTo.withRel("all-users"));
+
+            return userEntityModel;
+       /* } catch (RuntimeException e) {
+            JsonMessage jsonMessage = new JsonMessage();
+            jsonMessage.setContent(e.getMessage());
+            Map<String, Object> map = new HashMap<>();
+            map.put("stackTrace", e.getStackTrace());
+            jsonMessage.setMap(map);
+             logger.error(jsonMessage);
+             return null;
+        }*/
     }
 
     @PostMapping(path = "/users")

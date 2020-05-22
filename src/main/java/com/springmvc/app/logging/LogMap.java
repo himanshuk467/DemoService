@@ -1,4 +1,4 @@
-package com.springmvc.app.beans;
+package com.springmvc.app.logging;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,15 +6,17 @@ import java.util.Map;
 public class LogMap {
     private Map<String, Object> map;
 
-    public LogMap() {
-    }
-
-    public void setMap(Map<String, Object> map) {
+    private LogMap(Map<String, Object> map) {
         this.map = map;
     }
 
+
     public Map<String, Object> getmap() {
         return this.map;
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
 
 
@@ -24,6 +26,10 @@ public class LogMap {
 
         public Builder() {
             this.map = new HashMap<>();
+        }
+
+        public Map<String, Object> getMap() {
+            return this.map;
         }
 
         public LogMap.Builder withKey(String key, Object value) {
@@ -39,8 +45,7 @@ public class LogMap {
         }
 
         public LogMap build() {
-            LogMap logMap = new LogMap();
-            logMap.setMap(this.map);
+            LogMap logMap = new LogMap(this.map);
             return logMap;
         }
     }
