@@ -14,7 +14,7 @@
                      filePattern="${APP_LOG_ROOT}/logs/application-%d{yyyy-MM-dd}-%i.log">
             <JsonLayout complete = "true" compact = "false" properties="true" locationInfo="true" eventEol = "true" objectMessageAsJsonObject="true" >
                 <KeyValuePair key="timestamp" value="$${date:yyyy-MM-dd'T'HH:mm:ss.SSSZ}" />
-                <KeyValuePair key="requestId" value="${ctx:requestId}"/>
+                <KeyValuePair key="requestId" value="$${contextLookUp:requestId}"/>
                 <KeyValuePair key="className" value="value"/>
             </JsonLayout>
             <Policies>
